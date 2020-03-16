@@ -7,12 +7,34 @@
 # VScode history plugin
 /.history
 
+
+############################
+#####                  #####
+#####     VUE-CLI      #####
+#####                  #####
+############################
+
 node_modules
 *.iml
 .idea
 *.log*
 .nuxt
-.vscode
 .DS_Store
 coverage
 dist
+
+
+############################
+#####                  #####
+#####    From VSCode   #####
+#####     gitignore    #####
+#####     extension    #####
+#####                  #####
+############################
+
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+*.code-workspace
