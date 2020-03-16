@@ -23,12 +23,50 @@ yarn add nuxt-structured-data # or npm install nuxt-structured-data
 ```js
 {
   modules: [
-    // Simple usage
     'nuxt-structured-data',
-
-    // With options
-    ['nuxt-structured-data', { /* module options */ }]
   ]
+}
+```
+
+## Usage
+
+In every page, this module will inject a json-ld script based on `structuredData` property value.
+
+## Example
+
+*pages/schools/_slug.vue*
+
+```js
+export default {
+  ...
+  async asyncData({ app, error, params }) {
+    try {
+      const response = await app.$axios.get(`SCHOOL_API_ROUTE/${params.slug}`)
+
+      return {
+        school: response.data,
+        microdata: {
+          "@type": "School",
+          address: {
+            "@type": "PostalAddress",
+            addressLocality: response.data.city,
+            addressCountry: "FR",
+            streetAddress: response.data.street,
+            postalCode: response.data.zip_code
+          },
+          email: response.data.email,
+          telephone: response.data.tel,
+          logo: response.data.logo
+        }
+      };
+    } catch (err) {
+      error({
+        statusCode: 404,
+        message: "Cannot find this school"
+      })
+    }
+  }
+  ...
 }
 ```
 
@@ -50,12 +88,6 @@ Copyright (c) Quentin Neyraud <quentin.neyraud@gmail.com>
 
 [npm-downloads-src]: https://img.shields.io/npm/dt/nuxt-structured-data.svg?style=flat-square
 [npm-downloads-href]: https://npmjs.com/package/nuxt-structured-data
-
-[circle-ci-src]: https://img.shields.io/circleci/project/github/.svg?style=flat-square
-[circle-ci-href]: https://circleci.com/gh/
-
-[codecov-src]: https://img.shields.io/codecov/c/github/.svg?style=flat-square
-[codecov-href]: https://codecov.io/gh/
 
 [license-src]: https://img.shields.io/npm/l/nuxt-structured-data.svg?style=flat-square
 [license-href]: https://npmjs.com/package/nuxt-structured-data
