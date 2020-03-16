@@ -38,14 +38,12 @@ In every page, this module will inject a json-ld script based on `structuredData
 
 ```js
 export default {
-  ...
   async asyncData({ app, error, params }) {
     try {
       const response = await app.$axios.get(`SCHOOL_API_ROUTE/${params.slug}`)
 
       return {
-        school: response.data,
-        microdata: {
+        structuredData: {
           "@type": "School",
           address: {
             "@type": "PostalAddress",
@@ -66,7 +64,6 @@ export default {
       })
     }
   }
-  ...
 }
 ```
 
